@@ -18,7 +18,7 @@ tags:
 - Medical Imaging
 - Synthetic Data
 - Segmentation
-custom_badge: Research in progress
+custom_badge: Under Research
 github_link: https://github.com/YassienTawfikk/SynthFCD
 ---
 
