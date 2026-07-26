@@ -470,3 +470,8 @@ i {
        If specific pages need centering on mobile (like About), we might need media queries there
        or a utility class. For now sticking to base definitions. */
 }
+
+/* Custom text-muted override */
+.text-muted {
+    color: #8a8a8a !important;
+}

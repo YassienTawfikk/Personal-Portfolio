@@ -76,7 +76,7 @@
             if (window.caches) {
                 caches.keys().then(names => {
                     names.forEach(name => {
-                        if (name.includes('v1') || name.includes('v2') || name.includes('v3')) {
+                        if (name.includes('v1') || name.includes('v2') || name.includes('v3') || name.includes('v4') || name.includes('v5')) {
                             caches.delete(name);
                             console.log('Purged old cache:', name);
                         }

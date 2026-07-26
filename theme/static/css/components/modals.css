@@ -155,3 +155,76 @@
         right: 5px;
     }
 }
+/* =========================================================
+   Graduation Project Modal Specifics
+   ========================================================= */
+
+.custom-modal-content {
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.grad-modal-header {
+    flex: 0 0 auto;
+}
+
+.grad-modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+    .modal-dialog {
+        max-width: 100% !important;
+        margin: 0 !important;
+        height: 100% !important;
+    }
+    .custom-modal-content {
+        max-height: 100% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+    }
+}
+
+/* Honor prefers-reduced-motion: opacity fade only, no scale-in */
+@media (prefers-reduced-motion: reduce) {
+    .modal.fade .modal-dialog {
+        transition: opacity 0.3s linear !important;
+        transform: none !important;
+    }
+    
+    .modal.fade:not(.show) .modal-dialog {
+        opacity: 0;
+    }
+    
+    .btn-close {
+        transition: opacity 0.3s ease !important;
+    }
+    .btn-close:hover {
+        transform: none !important;
+    }
+}
+
+/* GP Modal Desktop Constraints */
+.gp-modal-dialog {
+    max-width: 860px !important;
+    width: 95%;
+}
+
+/* GP Pipeline Image Touch / Hover Behavior */
+.gp-pipeline-img {
+    filter: grayscale(0);
+    transition: filter 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .gp-pipeline-img {
+        filter: grayscale(1);
+    }
+    .gp-pipeline-card:hover .gp-pipeline-img {
+        filter: grayscale(0);
+    }
+}

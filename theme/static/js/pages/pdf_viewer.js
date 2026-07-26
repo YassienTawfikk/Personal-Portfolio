@@ -32,28 +32,41 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 100);
     }
 
-    // Initial Load
+    // Expose load function globally so other scripts can trigger it
+    window.loadPdfDocument = function(url) {
+        // Reset current pdf if changing
+        pdfDoc = null;
+        zoomWrapper.innerHTML = '';
+        if (fallback) fallback.style.display = 'none';
+        if (container) container.style.display = 'flex';
+
+        waitForPdfJs(function() {
+            if (url) {
+                pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+                    pdfDoc = pdfDoc_;
+                    renderAllPages();
+                }).catch(function (error) {
+                    console.error('Error loading PDF:', error);
+                    if (fallback) {
+                        fallback.style.display = 'block';
+                        fallback.innerHTML = 'Your browser does not support PDF viewing. <a href="' + url + '" download target="_blank">Download the PDF</a> to view it.<br><br><span style="color: red; font-size: 0.9em;">Debug Error: ' + error.message + '</span>';
+                    }
+                    if (container) container.style.display = 'none';
+                });
+            }
+        });
+    };
+
+    // Initial Load for Resume Modal (Backward Compatibility)
     const resumeModal = document.getElementById('resume-modal');
     if (resumeModal) {
         resumeModal.addEventListener('shown.bs.modal', function () {
             if (!pdfDoc) {
-                waitForPdfJs(function() {
-                    if (typeof RESUME_URL !== 'undefined' && RESUME_URL) {
-                        pdfjsLib.getDocument(RESUME_URL).promise.then(function (pdfDoc_) {
-                            pdfDoc = pdfDoc_;
-                            renderAllPages();
-                        }).catch(function (error) {
-                            console.error('Error loading PDF:', error);
-                            if (fallback) {
-                                fallback.style.display = 'block';
-                                fallback.innerHTML += '<br><br><span style="color: red; font-size: 0.9em;">Debug Error: ' + error.message + '</span>';
-                            }
-                            if (container) container.style.display = 'none';
-                        });
-                    }
-                });
+                if (typeof RESUME_URL !== 'undefined' && RESUME_URL) {
+                    window.loadPdfDocument(RESUME_URL);
+                }
             } else {
-                renderAllPages();
+                renderAllPages(); // Re-render if already loaded
             }
         });
     }

@@ -21,6 +21,7 @@ if __name__ == "__main__":
             print(f"Error: Could not find '{DIRECTORY}' directory.")
             exit(1)
 
+    socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
         print(f"Serving at http://localhost:{PORT}")
         try:

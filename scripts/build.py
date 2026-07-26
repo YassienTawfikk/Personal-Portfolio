@@ -27,6 +27,7 @@ PAGES = [
     ('education.html', 'education.html'),
     ('society.html', 'society.html'),
     ('contact.html', 'contact.html'),
+    ('graduation_project.html', 'projects/graduation-project/index.html'),
 ]
 
 
@@ -53,7 +54,11 @@ def render_pages(site_data):
     for template_name, output_name in PAGES:
         template = env.get_template(template_name)
         html = template.render(**site_data)
-        with open(os.path.join(OUTPUT_DIR, output_name), 'w') as f:
+        
+        output_path = os.path.join(OUTPUT_DIR, output_name)
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        
+        with open(output_path, 'w') as f:
             f.write(html)
 
 

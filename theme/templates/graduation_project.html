@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Graduation Project | Yassien Tawfik{% endblock %}
+
+{% block head_css %}
+<!-- Reuse the modal CSS so the standalone page looks identical to the modal -->
+<link rel="stylesheet" href="/css/components/modals.css">
+<style>
+    body {
+        background-color: #1a1a1a;
+    }
+    .standalone-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background-color: #1a1a1a;
+        color: var(--white-color);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    @media (max-width: 640px) {
+        .standalone-container {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+        }
+    }
+
+    /* Hide the close button in standalone view as there's nothing to close overlay-wise */
+    #grad-modal-close-btn {
+        display: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="standalone-container shadow-lg">
+    {% include "components/graduation_project_content.html" %}
+</div>
+
+{% with label="Projects", url="/projects.html", style="margin-top: 40px" %}
+{% include "components/footer_nav.html" %}
+{% endwith %}
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/components/graduation_modal.js"></script>
+<script>
+    // In standalone mode, we still want the video iframe logic to work
+    document.addEventListener("DOMContentLoaded", () => {
+        initGraduationVideo();
+    });
+</script>
+{% endblock %}

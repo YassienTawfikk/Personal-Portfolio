@@ -1,52 +1,79 @@
 document.addEventListener("DOMContentLoaded", () => {
     const track = document.getElementById("education-slider-track");
-    const btnBsc = document.getElementById("btn-bsc");
-    const btnMsc = document.getElementById("btn-msc");
+    const toggleBtn = document.getElementById("slider-toggle-btn");
     const dots = document.querySelectorAll(".slider-dots .dot");
     const images = document.querySelectorAll(".image-holder img");
     const firstImage = images.length > 0 ? images[0] : null;
     const secondImage = images.length > 1 ? images[1] : null;
-    
-    // Store initial MSc images
-    const mscImage1 = firstImage ? firstImage.getAttribute("src") : "";
-    const mscImage2 = secondImage ? secondImage.getAttribute("src") : "";
 
-    // Preload BSc images to eliminate latency
-    const preload1 = new Image(); preload1.src = "/images/education/cairo-university-1.webp";
-    const preload2 = new Image(); preload2.src = "/images/education/cairo-university-2.webp";
+    if (!track) return;
 
-    if (!track || !btnBsc || !btnMsc) return;
+    // Find panels and build a map of target -> index
+    const panels = Array.from(track.querySelectorAll(".slide-panel"));
+    if (panels.length === 0) return;
 
-    let currentSlide = 0; // 0 for MSc, 1 for BSc
+    const targetMap = {};
+    panels.forEach((panel, index) => {
+        const slideName = panel.getAttribute("data-slide");
+        if (slideName) targetMap[slideName] = index;
+    });
 
-    function updateSlider(index) {
-        currentSlide = index;
-        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    // We assume MSc is present if targetMap["msc"] exists
+    const hasMsc = "msc" in targetMap;
 
-        // Update hover behavior (only MSc images get original colors on hover)
+    // BSc images
+    const bscImage1 = "/images/education/cairo-university-1.webp";
+    const bscImage2 = "/images/education/cairo-university-2.webp";
+    // MSc images (preloaded)
+    const mscImage1 = "/images/education/ucalgary-logo.webp";
+    const mscImage2 = "/images/education/ucalgary-campus.webp";
+    if (hasMsc) {
+        const preload1 = new Image(); preload1.src = mscImage1;
+        const preload2 = new Image(); preload2.src = mscImage2;
+    }
+
+    let currentTarget = hasMsc ? "msc" : "bsc";
+
+    function updateSlider(target) {
+        if (!(target in targetMap)) return;
+
+        currentTarget = target;
+        const targetIndex = targetMap[target];
+        track.style.transform = `translateX(-${targetIndex * 100}%)`;
+
+        // Update hover behavior (MSc gets hover-color)
         const imageHolder = document.querySelector(".image-holder");
         if (imageHolder) {
-            if (currentSlide === 0) {
+            if (currentTarget === "msc") {
                 imageHolder.classList.add("hover-color");
             } else {
                 imageHolder.classList.remove("hover-color");
             }
         }
 
-        // Update buttons
-        btnMsc.disabled = currentSlide === 0;
-        btnBsc.disabled = currentSlide === 1;
-
         // Update dots
-        dots.forEach((dot, i) => {
-            if (i === currentSlide) {
+        dots.forEach(dot => {
+            if (dot.getAttribute("data-target") === currentTarget) {
                 dot.classList.add("active");
+                dot.setAttribute("aria-current", "true");
             } else {
                 dot.classList.remove("active");
+                dot.removeAttribute("aria-current");
             }
         });
 
-        // Helper to smoothly update an image with zero latency (true crossfade)
+        // Update toggle button
+        if (toggleBtn && hasMsc) {
+            if (currentTarget === "msc") {
+                toggleBtn.setAttribute("data-target", "bsc");
+                toggleBtn.innerText = "BSc →";
+            } else {
+                toggleBtn.setAttribute("data-target", "msc");
+                toggleBtn.innerText = "← MSc";
+            }
+        }
+
+        // Helper to smoothly update an image
         const updateImage = (imgEl, newSrc) => {
             if (!imgEl) return;
             if (!imgEl.src.includes(newSrc)) {
@@ -54,8 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (getComputedStyle(wrapper).position === 'static') {
                     wrapper.style.position = 'relative';
                 }
-
-                // Create a clone of the old image to fade out on top
                 const clone = imgEl.cloneNode();
                 clone.style.position = 'absolute';
                 clone.style.top = '0';
@@ -66,43 +91,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 clone.style.transition = 'opacity 0.4s ease';
                 clone.style.zIndex = '1';
                 clone.style.filter = 'grayscale(100%)';
-                
+
                 wrapper.appendChild(clone);
-                
-                // Instantly update the real image underneath
                 imgEl.src = newSrc;
-                
-                // Trigger the fade out of the clone on the next frame
+
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         clone.style.opacity = '0';
-                        setTimeout(() => {
-                            clone.remove();
-                        }, 400); // Remove after transition finishes
+                        setTimeout(() => clone.remove(), 400);
                     });
                 });
             }
         };
 
-        // Update images based on current slide
-        const targetSrc1 = currentSlide === 0 ? mscImage1 : "/images/education/cairo-university-1.webp";
-        const targetSrc2 = currentSlide === 0 ? mscImage2 : "/images/education/cairo-university-2.webp";
-        
+        const targetSrc1 = currentTarget === "bsc" ? bscImage1 : mscImage1;
+        const targetSrc2 = currentTarget === "bsc" ? bscImage2 : mscImage2;
         updateImage(firstImage, targetSrc1);
         updateImage(secondImage, targetSrc2);
     }
 
-    btnMsc.addEventListener("click", () => {
-        if (currentSlide > 0) updateSlider(currentSlide - 1);
-    });
+    if (toggleBtn && hasMsc) {
+        toggleBtn.addEventListener("click", () => {
+            const target = toggleBtn.getAttribute("data-target");
+            updateSlider(target);
+        });
+    }
 
-    btnBsc.addEventListener("click", () => {
-        if (currentSlide < 1) updateSlider(currentSlide + 1);
-    });
-
-    dots.forEach((dot, index) => {
+    dots.forEach(dot => {
         dot.addEventListener("click", () => {
-            updateSlider(index);
+            const target = dot.getAttribute("data-target");
+            if (target) updateSlider(target);
         });
     });
 });

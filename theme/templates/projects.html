@@ -81,8 +81,75 @@
     </div>
   </div>
 </div>
+
+<!-- Paper Modal -->
+<div class="modal fade gallery-modal" id="paperModal" tabindex="-1" aria-labelledby="paperModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paperModalLabel">Project Paper</h5>
+                <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
+                    <a href="#" id="paperDownloadLink" download target="_blank" title="Download PDF" style="color: var(--white-color); font-size: 1.2rem;">
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin: 0;"></button>
+                </div>
+            </div>
+            <div class="modal-body" style="padding: 0; overflow: hidden;">
+                <div id="pdf-container" style="overflow: auto; height: 75vh; position: relative; touch-action: pan-x pan-y; background-color: #525659; display: flex; align-items: flex-start;">
+                    <div id="zoom-wrapper" style="width: 100%; box-sizing: border-box; padding: 0; margin: 20px auto; flex-shrink: 0; transform: translateZ(0);">
+                        <canvas id="the-canvas" style="display: block; width: 100%; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+                 <p id="pdf-fallback" style="text-align: center; padding: 20px; display: none;">
+                    Your browser does not support PDF viewing. <a href="#" id="paperFallbackLink" download target="_blank">Download the PDF</a> to view it.
+                 </p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
+<script>
+    (function() {
+        var pdfLoaded = false;
+        var paperModal = document.getElementById('paperModal');
+        if (!paperModal) return;
+
+        // When the modal is about to be shown, set up the PDF URL from the button
+        paperModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            if (!button) return;
+            
+            var pdfUrl = button.getAttribute('data-pdf-url');
+            var title = button.getAttribute('data-project-title');
+            
+            document.getElementById('paperModalLabel').textContent = title + " - Paper";
+            document.getElementById('paperDownloadLink').href = pdfUrl;
+            document.getElementById('paperFallbackLink').href = pdfUrl;
+
+            // Load pdf.js CSS
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css';
+            document.head.appendChild(link);
+
+            // Load pdf.js library
+            if (!window.pdfjsLib) {
+                var script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+                script.onload = function() {
+                    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                    if (window.loadPdfDocument) window.loadPdfDocument(pdfUrl);
+                };
+                document.head.appendChild(script);
+            } else {
+                if (window.loadPdfDocument) window.loadPdfDocument(pdfUrl);
+            }
+        });
+    })();
+</script>
+<script src="/js/pages/pdf_viewer.js?v=_v2_paper"></script>
 <script src="/js/pages/projects.js"></script>
 {% endblock %}

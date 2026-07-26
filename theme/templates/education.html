@@ -8,10 +8,15 @@
 
 {% block content %}
 <div class="education-port">
-    <div class="image-holder hover-color">
-        <div><img src="{{ education.image_01 }}" data-preload-critical fetchpriority="high" decoding="async" alt="">
+    <div class="image-holder {% if education.showMasters %}hover-color{% endif %}"
+        data-bsc-img1="{{ education.image_01 }}" data-bsc-img2="{{ education.image_02 }}">
+        <div><img
+                src="{% if education.showMasters %}/images/education/ucalgary-logo.webp{% else %}{{ education.image_01 }}{% endif %}"
+                data-preload-critical fetchpriority="high" decoding="async" alt="">
         </div>
-        <div><img src="{{ education.image_02 }}" loading="lazy" decoding="async" alt=""></div>
+        <div><img
+                src="{% if education.showMasters %}/images/education/ucalgary-campus.webp{% else %}{{ education.image_02 }}{% endif %}"
+                loading="lazy" decoding="async" alt=""></div>
     </div>
     <div class="education-container">
         <span class="unified-page-title title-left underline-80px">Education</span>
@@ -19,9 +24,9 @@
         <div class="slider-viewport">
             <div class="slider-track" id="education-slider-track">
 
-                <!-- Slide 1: MSc -->
                 {% if education.showMasters %}
-                <div class="slide-panel">
+                <!-- Slide 1: MSc -->
+                <div class="slide-panel" data-slide="msc">
                     <div class="degree-header">
                         <span class="subtitle body-font">
                             {{ education.msc.university }}
@@ -35,8 +40,12 @@
                         </div>
                     </div>
 
-                    <div class="specialization-line body-text body-font">
+                    <div class="specialization-line body-text body-font" style="margin-bottom: 8px;">
                         {{ education.msc.specialization }}
+                    </div>
+
+                    <div style="font-size: 0.85rem; color: #8a8a8a; font-style: italic; margin-bottom: 30px;">
+                        Research Focus · AI²Lab
                     </div>
 
                     <div class="project-block">
@@ -51,7 +60,7 @@
                 {% endif %}
 
                 <!-- Slide 2: BSc -->
-                <div class="slide-panel">
+                <div class="slide-panel" data-slide="bsc">
                     <div class="degree-header">
                         <span class="subtitle body-font">
                             {{ education.bsc.university }}{% if education.bsc.faculty %} — {{ education.bsc.faculty }}{%
@@ -62,21 +71,17 @@
                                 }}{% if education.bsc.gpa %} · GPA: {{ education.bsc.gpa }}{% endif %}</span>
                             {% if education.bsc.status %}
                             <span class="status-tag body-font">{{ education.bsc.status }}</span>
+                            <span class="status-tag body-font ms-2">IEEE EMBC FINALIST</span>
                             {% endif %}
                         </div>
                     </div>
 
-                    <div class="specialization-line body-text body-font">
+                    <div class="specialization-line body-text body-font" style="margin-bottom: 8px;">
                         {{ education.bsc.specialization }}
                     </div>
 
-                    <div class="project-block">
-                        <span class="small-label head-font">GRADUATION PROJECT</span>
-                        <div class="project-card">
-                            <span class="card-title head-font">{{ education.bsc.graduation_project.title }}</span>
-                            <p class="card-desc body-font">{{ education.bsc.graduation_project.description }}</p>
-                            <span class="card-tag body-font">{{ education.bsc.graduation_project.tag }}</span>
-                        </div>
+                    <div style="font-size: 0.85rem; color: #8a8a8a; font-style: italic; margin-bottom: 30px;">
+                        Automated Lesion Segmentation in Epilepsy
                     </div>
 
                     <div class="courses-container">
@@ -100,6 +105,11 @@
                             </div>
                         </div>
                     </div>
+
+                    <button class="std-button std-button-secondary w-100 justify-content-center mt-3"
+                        data-bs-toggle="modal" data-bs-target="#grad-project-modal">
+                        Graduation Project
+                    </button>
                 </div>
 
             </div>
@@ -107,12 +117,12 @@
 
         {% if education.showMasters %}
         <div class="slider-controls">
-            <button class="slider-btn body-font" id="btn-msc" disabled>← MSc</button>
             <div class="slider-dots">
-                <span class="dot active" data-index="0"></span>
-                <span class="dot" data-index="1"></span>
+                <span class="dot active" data-target="msc" aria-current="true"></span>
+                <span class="dot" data-target="bsc"></span>
             </div>
-            <button class="slider-btn body-font" id="btn-bsc">BSc →</button>
+            <button class="slider-btn body-font" id="slider-toggle-btn" data-target="bsc"
+                style="outline-offset: 4px;">BSc →</button>
         </div>
         {% endif %}
     </div>
@@ -121,10 +131,13 @@
 {% with label="Society", url="/society.html", style="margin-top: 0" %}
 {% include "components/footer_nav.html" %}
 {% endwith %}
+
+{% include "components/modal_shell.html" %}
 {% endblock %}
 
 {% block scripts %}
+<script src="/js/components/graduation_modal.js"></script>
 {% if education.showMasters %}
-<script src="/js/pages/education.js?v=3"></script>
+<script src="/js/pages/education.js?v=4"></script>
 {% endif %}
 {% endblock %}

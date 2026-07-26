@@ -1,0 +1,148 @@
+<div class="modal-header border-bottom-0" style="padding: 24px 24px 0 24px;">
+    <div class="d-flex justify-content-between align-items-start w-100">
+        <div>
+            <h2 class="head-font grad-modal-title mb-1" style="font-size: 1.35rem; color: #ffffff;">Automated Lesion
+                Segmentation in Epilepsy</h2>
+            <p class="body-font mb-0" style="font-size: 0.85rem; color: #a0a0a0;">Graduation Project · Cairo University
+                · July 2026</p>
+        </div>
+        <button type="button" class="btn-close btn-close-white ms-3 mt-1" aria-label="Close" data-bs-dismiss="modal"
+            style="flex-shrink: 0;"></button>
+    </div>
+</div>
+
+<div class="modal-body custom-scrollbar" style="padding: 24px;">
+
+    <!-- Badge Row -->
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        <span class="badge rounded-pill px-3 py-2"
+            style="font-weight: normal; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #dcdcdc;">IEEE
+            EMBC finalist</span>
+        <span class="badge rounded-pill px-3 py-2"
+            style="font-weight: normal; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #dcdcdc;">2
+            pipelines</span>
+        <span class="badge rounded-pill px-3 py-2"
+            style="font-weight: normal; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #dcdcdc;">Bonn
+            FCD II · n = 28</span>
+    </div>
+
+    <!-- Video Player Section -->
+    <div class="grad-video-container mb-4 position-relative" id="grad-video-container"
+        style="aspect-ratio: 16/9; background: #0a0a0a; border-radius: 8px; overflow: hidden;">
+        <div class="grad-video-poster w-100 h-100 position-absolute top-0 left-0" id="grad-video-poster" role="button"
+            tabindex="0" aria-label="Play Defense Video"
+            style="cursor: pointer; transition: filter 0.3s ease; background-color: #1a1a1a;">
+            <img src="https://img.youtube.com/vi/r8zxcXHgXfw/hqdefault.jpg" alt="Defense Video Thumbnail"
+                class="w-100 h-100 object-fit-cover" style="filter: grayscale(1); transition: filter 0.3s ease;"
+                onerror="this.style.opacity='0'">
+            <div class="play-button position-absolute top-50 start-50 translate-middle"
+                style="color: #ffffff; font-size: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); opacity: 0.8; transition: opacity 0.3s ease;">
+                <i class="fa-solid fa-play"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview -->
+    <div class="grad-overview mb-4">
+        <p class="body-font mb-0" style="font-size: 0.95rem; line-height: 1.6; color: #dcdcdc;">
+            Built two deep learning pipelines for automated Focal Cortical Dysplasia (FCD Type II) lesion segmentation
+            in 3D FLAIR MRI, supporting pre-surgical evaluation in drug-resistant epilepsy. One is a supervised nnU-Net
+            approach that became an IEEE EMBC finalist; the other tests whether synthetic data can remove the field's
+            data-scarcity bottleneck.
+        </p>
+    </div>
+
+    <!-- Pipelines Cards -->
+    <div class="row g-4 mb-5">
+        <!-- Card 1: nnU-FCD -->
+        <div class="col-md-6">
+            <div class="h-100 p-4 rounded d-flex flex-column"
+                style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="mb-3 rounded overflow-hidden" style="background: #111;">
+                    <img src="/images/projects/nnu-fcd-card.webp" class="w-100 object-fit-cover"
+                        style="aspect-ratio: 16/9; filter: grayscale(1); transition: filter 0.3s ease;"
+                        alt="nnU-FCD defense presentation slide showing model architecture"
+                        onmouseover="this.style.filter='grayscale(0)'" onmouseout="this.style.filter='grayscale(1)'"
+                        onerror="this.style.opacity='0'">
+                </div>
+                <div class="mb-4">
+                    <h4 class="head-font h5 mb-1" style="color: #ffffff;">nnU-FCD</h4>
+                    <p class="body-font mb-0" style="font-size: 0.85rem; color: #a0a0a0;">IEEE EMBC finalist</p>
+                </div>
+                <a href="https://github.com/YassienTawfikk/nnU-FCD" target="_blank" rel="noopener noreferrer"
+                    class="text-decoration-none mt-auto"
+                    style="font-size: 0.85rem; transition: color 0.3s; color: #dcdcdc;"
+                    onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#dcdcdc'">
+                    github.com/YassienTawfikk/nnU-FCD <i class="fa-solid fa-arrow-up-right-from-square ms-1"
+                        style="font-size: 0.8em; opacity: 0.7;"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Card 2: SynthFCD -->
+        <div class="col-md-6">
+            <div class="h-100 p-4 rounded d-flex flex-column"
+                style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="mb-3 rounded overflow-hidden" style="background: #111;">
+                    <img src="/images/projects/synthfcd-card.webp" class="w-100 object-fit-cover"
+                        style="aspect-ratio: 16/9; filter: grayscale(1); transition: filter 0.3s ease;"
+                        alt="SynthFCD project poster detailing the synthetic data generation approach"
+                        onmouseover="this.style.filter='grayscale(0)'" onmouseout="this.style.filter='grayscale(1)'"
+                        onerror="this.style.opacity='0'">
+                </div>
+                <div class="mb-4">
+                    <h4 class="head-font h5 mb-1" style="color: #ffffff;">SynthFCD</h4>
+                    <p class="body-font mb-0" style="font-size: 0.85rem; color: #a0a0a0;">Research in progress</p>
+                </div>
+                <a href="https://github.com/YassienTawfikk/SynthFCD" target="_blank" rel="noopener noreferrer"
+                    class="text-decoration-none mt-auto"
+                    style="font-size: 0.85rem; transition: color 0.3s; color: #dcdcdc;"
+                    onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#dcdcdc'">
+                    github.com/YassienTawfikk/SynthFCD <i class="fa-solid fa-arrow-up-right-from-square ms-1"
+                        style="font-size: 0.8em; opacity: 0.7;"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer link row -->
+    <div class="d-flex flex-wrap gap-4 justify-content-center mb-5 body-font" style="font-size: 0.85rem;">
+        <a href="https://github.com/YassienTawfikk/Epilepsy-Lesion-Segmentation" target="_blank"
+            rel="noopener noreferrer" class="text-decoration-none" style="transition: color 0.3s; color: #a0a0a0;"
+            onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#a0a0a0'">
+            View on GitHub <i class="fa-solid fa-arrow-up-right-from-square ms-1"
+                style="font-size: 0.8em; opacity: 0.6;"></i>
+        </a>
+        <a href="https://github.com/YassienTawfikk/Epilepsy-Lesion-Segmentation/blob/main/presentation/GP_Final_Defense_FCD_Segmentation.pdf"
+            target="_blank" rel="noopener noreferrer" class="text-decoration-none"
+            style="transition: color 0.3s; color: #a0a0a0;" onmouseover="this.style.color='#ffffff'"
+            onmouseout="this.style.color='#a0a0a0'">
+            Defense slide deck (PDF) <i class="fa-solid fa-arrow-up-right-from-square ms-1"
+                style="font-size: 0.8em; opacity: 0.6;"></i>
+        </a>
+        <a href="https://openneuro.org/datasets/ds004199" target="_blank" rel="noopener noreferrer"
+            class="text-decoration-none" style="transition: color 0.3s; color: #a0a0a0;"
+            onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#a0a0a0'">
+            Dataset: OpenNeuro ds004199 <i class="fa-solid fa-arrow-up-right-from-square ms-1"
+                style="font-size: 0.8em; opacity: 0.6;"></i>
+        </a>
+    </div>
+
+    <!-- Credits -->
+    <div class="pb-2 body-font text-start" style="font-size: 0.85rem; line-height: 1.6;">
+        <div class="d-flex flex-column flex-md-row mb-2">
+            <div style="width: 100px; flex-shrink: 0; color: #7d7d7d; font-size: 12px; padding-top: 2px;">Team</div>
+            <div style="color: #a0a0a0;">
+                Yassien Tawfik · Mazen Marwan · Mohamed Yasser · Nancy Mahmoud · Madonna Mosaad
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row">
+            <div style="width: 100px; flex-shrink: 0; color: #7d7d7d; font-size: 12px; padding-top: 2px;">Supervisors
+            </div>
+            <div style="color: #a0a0a0;">
+                Dr. Aya Khalaf (Yale) · Dr. Tamer Basha (Cairo) · Eng. Mahmoud Salman (Western)
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,6 +1,5 @@
-
-const CACHE_NAME = 'yassien-portfolio-v4';
-const ASSETS_CACHE = 'assets-cache-v4';
+const CACHE_NAME = 'portfolio-cache-v7';
+const ASSETS_CACHE = 'assets-cache-v7';
 const PRECACHE_URLS = []; // Will be populated by build script during deployment
 
 // Install Event: Cache core static assets immediately

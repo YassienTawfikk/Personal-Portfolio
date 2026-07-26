@@ -2,7 +2,9 @@
 <div class="project-card {{ 'featured-card' if is_featured else '' }}">
     <div class="project-image-container">
         <img src="{{ project.overview_image }}" class="project-image" alt="{{ project.title }} Overview" loading="lazy" decoding="async">
-        {% if is_featured %}
+        {% if project.custom_badge %}
+        <div class="live-badge">{{ project.custom_badge }}</div>
+        {% elif is_featured %}
         <div class="live-badge">LIVE DEMO</div>
         {% endif %}
     </div>
@@ -26,24 +28,40 @@
         </div>
         
         <div class="project-links">
-            {% if project.github_link %}
-            <a href="{{ project.github_link }}" target="_blank" class="std-button std-button-primary">
-                <i class="fab fa-github"></i> Code
-            </a>
-            {% endif %}
-            
-            {% if project.live_demo %}
-            <a href="{{ project.live_demo }}" target="_blank" class="std-button std-button-secondary">
-                <i class="fas fa-play"></i> Live Demo
-            </a>
-            {% endif %}
-            
-            {% if project.video_demo %}
-            <button class="std-button std-button-secondary video-btn" 
-                    data-video-url="{{ project.video_demo }}"
-                    data-project-title="{{ project.title }}">
-                <i class="fas fa-video"></i> Video Demo
+            {% if project.is_modal %}
+            <button class="std-button std-button-secondary" data-bs-toggle="modal" data-bs-target="{{ project.modal_target }}">
+                <i class="fas fa-up-right-from-square"></i> View Project
             </button>
+            {% else %}
+                {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank" class="std-button std-button-primary">
+                    <i class="fab fa-github"></i> Code
+                </a>
+                {% endif %}
+                
+                {% if project.paper_link %}
+                <button class="std-button std-button-secondary paper-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#paperModal"
+                        data-pdf-url="{{ project.paper_link }}"
+                        data-project-title="{{ project.title }}">
+                    <i class="fas fa-file-pdf"></i> Paper
+                </button>
+                {% endif %}
+                
+                {% if project.live_demo %}
+                <a href="{{ project.live_demo }}" target="_blank" class="std-button std-button-secondary">
+                    <i class="fas fa-play"></i> Live Demo
+                </a>
+                {% endif %}
+                
+                {% if project.video_demo %}
+                <button class="std-button std-button-secondary video-btn" 
+                        data-video-url="{{ project.video_demo }}"
+                        data-project-title="{{ project.title }}">
+                    <i class="fas fa-video"></i> Video Demo
+                </button>
+                {% endif %}
             {% endif %}
         </div>
     </div>

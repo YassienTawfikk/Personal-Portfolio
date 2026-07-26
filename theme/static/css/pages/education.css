@@ -227,15 +227,15 @@
 }
 
 .slider-btn {
-    background: transparent;
-    border: none;
-    color: #888;
+    background: none;
+    color: rgb(136, 136, 136);
     cursor: pointer;
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    transition: color 0.3s ease;
-    padding: 5px;
+    transition: color 0.3s;
+    padding: 5px 20px;
+    border-color: white;
 }
 
 .slider-btn:hover:not(:disabled) {
